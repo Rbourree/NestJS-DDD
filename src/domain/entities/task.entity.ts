@@ -1,6 +1,6 @@
 export class Task {
   constructor(
-    private readonly id: string,
+    private readonly id_task: string,
     private title: string,
     private description: string,
     private completed: boolean = false,
@@ -23,7 +23,7 @@ export class Task {
   }
 
   getId(){
-    return this.id;
+    return this.id_task;
   }
 
   getTitle(){

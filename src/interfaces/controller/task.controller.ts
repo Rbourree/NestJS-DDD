@@ -1,8 +1,9 @@
 import { Controller, Post, Body, Get, Param, Delete } from "@nestjs/common";
-import { CreateTaskUseCase } from "../use-cases/create-task.use-case";
+import { CreateTaskUseCase } from "../../application/use-cases/create-task.use-case";
 import { PrismaTaskRepository } from "src/infra/repository/prismaTask.repository";
 import { TaskService } from "src/domain/service/task.service";
-import { TaskDto } from "../dto/task.dto";
+import { CreateTaskDto } from "../dtos/input/createTask.dto";
+import { TaskResponseDto } from "../dtos/output/taskResponse";
 
 @Controller('tasks')
 export class TaskController {
@@ -12,7 +13,7 @@ export class TaskController {
     private readonly createTaskUseCase = new CreateTaskUseCase(this.taskRepository, this.taskService);
 
     @Post()
-    async createTask(@Body() body: TaskDto) {
+    async createTask(@Body() body: CreateTaskDto): Promise<TaskResponseDto> {
         return await this.createTaskUseCase.createTask(body);
     }
 
@@ -20,6 +21,11 @@ export class TaskController {
     async getTask(@Param('id') id: string) {
         const task = await this.taskRepository.findById(id);
         return task || { error: 'Task not found' };
+    }
+
+    @Get()
+    async getAllTasks() {
+        return await this.taskRepository.findAll();
     }
 
     @Delete(':id')
