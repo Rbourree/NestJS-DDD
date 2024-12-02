@@ -1,8 +1,8 @@
 import { Task } from "../entities/task.entity";
 
 export class TaskService {
-    createTask(id: string, title: string, description: string): Task {
-        return new Task(id, title, description);
+    createTask(title: string, description: string): Task {
+        return new Task(null, title, description);
     }
 
 

@@ -1,5 +1,6 @@
 import { TaskRepository } from '../../domain/repositories/task.repository';
 import { TaskService } from '../../domain/service/task.service';
+import { TaskDto } from '../dto/task.dto';
 
 export class CreateTaskUseCase {
   constructor(
@@ -7,8 +8,8 @@ export class CreateTaskUseCase {
     private readonly taskService: TaskService,
   ) {}
 
-  async createTask(id: string, title: string, description: string): Promise<void> {
-    const task = this.taskService.createTask(id, title, description);
+  async createTask(data: TaskDto): Promise<void> {
+    const task = this.taskService.createTask(data.title, data.description);
     await this.taskRepository.save(task);
   }
 }
